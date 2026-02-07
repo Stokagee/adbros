@@ -1,0 +1,9 @@
+version: '3.8'
+
+services:
+  robot-tests:
+    # Mount source files for hot-reload during development
+    volumes:
+      - ./tests:/app/tests
+      - ./resources:/app/resources
+      - ./init_db.py:/app/init_db.py

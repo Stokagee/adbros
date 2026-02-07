@@ -20,17 +20,29 @@ This project demonstrates professional test automation practices using:
 
 **Linux/macOS:**
 ```bash
+# Run tests (fast, uses existing image)
 ./run_tests.sh
+
+# Force rebuild when dependencies change
+./run_tests.sh --build
 ```
 
 **Windows:**
 ```batch
+# Run tests (fast, uses existing image)
 run_tests.bat
+
+# Force rebuild when dependencies change
+run_tests.bat --build
 ```
 
 Or manually:
 ```bash
-docker-compose up --build
+# Quick run (no rebuild)
+docker compose up
+
+# Force rebuild
+docker compose up --build
 ```
 
 ### View Results
@@ -163,9 +175,29 @@ This project strictly follows the Page Object Model pattern:
 
 The project includes complete Docker setup:
 - `Dockerfile`: Python 3.11 with Playwright browser support
-- `docker-compose.yml`: Service configuration with volume mounting
+- `docker-compose.yml`: Service configuration with CI-friendly image naming
+- `docker-compose.override.yml`: Optional development overrides (included)
 - Automatic browser installation and database initialization
 - Test reports accessible on host machine
+
+### Development Workflow
+
+The `docker-compose.override.yml` file is included and automatically mounts source files for hot-reload. Changes to test code are reflected immediately without rebuilding the Docker image.
+
+```yaml
+# docker-compose.override.yml (already included)
+services:
+  robot-tests:
+    volumes:
+      - ./tests:/app/tests
+      - ./resources:/app/resources
+      - ./init_db.py:/app/init_db.py
+```
+
+**Benefits:**
+- Fast iteration during development
+- No rebuild needed when changing tests
+- CI pipelines can use pre-built images via `image: adbros-demo:latest`
 
 ## Notes
 

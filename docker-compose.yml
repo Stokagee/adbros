@@ -3,6 +3,7 @@ version: '3.8'
 services:
   robot-tests:
     build: .
+    image: adbros-demo:latest
     volumes:
       - ./reports:/app/reports
     environment:
