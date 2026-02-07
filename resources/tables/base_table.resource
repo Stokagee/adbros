@@ -77,7 +77,7 @@ _Get Table Item Count
     [Documentation]    Internal: Get row count from a table with error handling
     [Arguments]    ${table_name}
     TRY
-        ${count}=    Row Count    ${table_name}
+        ${count}=    Row Count    SELECT COUNT(*) FROM ${table_name}
         Log    Table ${table_name} has ${count} rows    console=True
         RETURN    ${count}
     EXCEPT    AS    ${err}
@@ -88,13 +88,13 @@ _Get Table Item By Id
     [Documentation]    Internal: Get item by ID from a table with error handling
     [Arguments]    ${table_name}    ${id}
     TRY
-        ${row}=    Execute Query String    SELECT * FROM ${table_name} WHERE id=${id}
-        ${count}=    Get Length    ${row}
+        @{rows}=    Query    SELECT * FROM ${table_name} WHERE id=${id}
+        ${count}=    Get Length    ${rows}
         IF    ${count} == 0
             Fail    No ${table_name} found with ID ${id}
         END
         Log    Found ${table_name} with ID ${id}    console=True
-        RETURN    ${row}[0]
+        RETURN    @{rows}[0]
     EXCEPT    AS    ${err}
         Fail    Failed to get ${table_name} by ID | ID: ${id} | Error: ${err}
     END
