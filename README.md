@@ -36,6 +36,8 @@ run_tests.bat
 run_tests.bat --build
 ```
 
+> **Note:** The Windows script includes an interactive menu after test completion with options to view the report (G), run tests again (A), or quit (L).
+
 Or manually:
 ```bash
 # Quick run (no rebuild)
@@ -54,45 +56,86 @@ After tests complete, open:
 
 ```
 adbros/
-├── Dockerfile                  # Docker image definition
-├── docker-compose.yml          # Service configuration
-├── requirements.txt            # Python dependencies
-├── run_tests.sh/.bat           # Startup scripts
-├── init_db.py                  # Database initialization (Docker build only)
-├── resources/                  # Shared resources
-│   ├── config/                # Configuration and test data
-│   ├── pages/                 # Page Object Model
-│   │   ├── base_page.resource        # Common page methods
-│   │   ├── login_page.resource       # Login page objects
-│   │   ├── inventory_page.resource   # Products page objects
-│   │   ├── cart_page.resource        # Cart page objects
-│   │   ├── checkout_page.resource    # Checkout page objects
-│   │   └── navigation_page.resource  # Navigation elements
-│   ├── keywords/              # Reusable keywords
-│   ├── endpoints/             # API endpoint objects
-│   ├── tables/                # Database table objects
-│   └── locators.resource      # Shared locators
-└── tests/                      # Test suites
-    ├── ui/                    # UI tests (SauceDemo)
-    ├── api/                   # API tests (Fake Store)
-    └── db/                    # Database tests
+├── tests/                              # Test suites
+│   ├── ui/                             # UI test suites (SauceDemo)
+│   │   ├── login_tests.robot           # Authentication tests (9 cases)
+│   │   ├── inventory_tests.robot       # Product listing tests (10 cases)
+│   │   ├── cart_tests.robot            # Shopping cart tests (8 cases)
+│   │   └── checkout_tests.robot        # Checkout flow tests (10 cases)
+│   ├── api/                            # API test suites
+│   │   └── fakestore_api_tests.robot   # API tests (8 cases)
+│   └── db/                             # Database test suites
+│       └── fakestore_db_tests.robot    # Database tests (12 cases)
+│
+├── resources/                          # Shared resources
+│   ├── config/                         # Configuration files
+│   │   ├── config.resource             # URLs, timeouts, browser settings
+│   │   └── test_data.resource          # Test user credentials
+│   │
+│   ├── ui/                             # UI layer (Page Object Model)
+│   │   ├── common.resource             # Imports all UI resources
+│   │   ├── keywords/                   # Page object keywords
+│   │   │   ├── base_page.resource      # Common page methods
+│   │   │   ├── login_page.resource     # Login page keywords
+│   │   │   ├── inventory_page.resource # Product inventory keywords
+│   │   │   ├── cart_page.resource      # Shopping cart keywords
+│   │   │   ├── checkout_page.resource  # Checkout flow keywords
+│   │   │   └── navigation_page.resource # Navigation keywords
+│   │   └── locators/                   # Page selectors (data-test, CSS)
+│   │       ├── shared_locators.resource
+│   │       ├── login_page.resource
+│   │       ├── inventory_page.resource
+│   │       ├── cart_page.resource
+│   │       ├── checkout_page.resource
+│   │       └── navigation_page.resource
+│   │
+│   ├── api/                            # API layer (Endpoint Object Model)
+│   │   ├── common.resource             # Imports all API resources
+│   │   ├── keywords/                   # Endpoint keywords
+│   │   │   ├── base_endpoint.resource  # Base API methods
+│   │   │   ├── products_endpoint.resource # Products endpoint
+│   │   │   ├── users_endpoint.resource    # Users endpoint
+│   │   │   └── carts_endpoint.resource    # Carts endpoint
+│   │   └── locators/                   # Endpoint URLs
+│   │       └── endpoints.resource
+│   │
+│   └── db/                             # Database layer (Table Object Model)
+│       ├── common.resource             # Imports all DB resources
+│       ├── keywords/                   # Table keywords
+│       │   ├── base_table.resource     # Base database methods
+│       │   ├── products_table.resource # Products table
+│       │   ├── users_table.resource    # Users table
+│       │   ├── carts_table.resource    # Carts table
+│       │   └── database_keywords.resource # DB init/verify
+│       └── locators/                   # Table names and SQL queries
+│           └── tables.resource
+│
+├── reports/                            # Generated test reports
+├── Dockerfile                          # Container image definition
+├── docker-compose.yml                  # Service configuration
+├── docker-compose.override.yml         # Development overrides (hot-reload)
+├── requirements.txt                    # Python dependencies
+├── init_db.py                          # Database initialization script
+├── run_tests.sh                        # Linux/macOS test runner
+├── run_tests.bat                       # Windows test runner
+└── README.md                           # Project documentation
 ```
 
 ## Test Suites
 
-### UI Tests (SauceDemo.com)
-- **Login Tests**: Authentication, validation, error handling
-- **Inventory Tests**: Product listing, sorting, cart operations
-- **Cart Tests**: Cart management, item removal
-- **Checkout Tests**: Complete purchase flow
+### UI Tests (SauceDemo.com) - 37 Test Cases
+- **Login Tests** (9 cases): Authentication, validation, error handling
+- **Inventory Tests** (10 cases): Product listing, sorting, cart operations
+- **Cart Tests** (8 cases): Cart management, item removal
+- **Checkout Tests** (10 cases): Complete purchase flow
 
-### API Tests (Fake Store API)
+### API Tests (Fake Store API) - 8 Test Cases
 - Product retrieval and validation
 - User data verification
 - Cart operations
 - Filtering and sorting
 
-### Database Tests (SQLite)
+### Database Tests (SQLite) - 12 Test Cases
 - Data persistence verification
 - Schema validation
 - Data consistency checks
@@ -144,12 +187,13 @@ pabot --outputdir reports tests/
 
 ## Technology Stack
 
-- **Robot Framework** 6.1+ - Test automation framework
-- **Robot Framework Browser** 18.0+ - Modern Playwright-based UI automation
-- **RequestsLibrary** - API testing
-- **DatabaseLibrary** - Database operations
+- **Robot Framework** 7.4.1+ - Test automation framework
+- **Robot Framework Browser** 18.0.0+ - Modern Playwright-based UI automation
+- **robotframework-requests** 0.9.6+ - API testing
+- **robotframework-databaselibrary** 1.2.5+ - Database operations
 - **Python** 3.11 - Runtime environment
 - **Docker** - Containerization
+- **Node.js** 20 LTS - Required for Playwright browsers
 
 ## Tag Convention
 
@@ -163,22 +207,33 @@ pabot --outputdir reports tests/
 - `cart` - Shopping cart tests
 - `checkout` - Checkout flow tests
 
-## Page Object Model
+## Architecture Patterns
 
-This project strictly follows the Page Object Model pattern:
-- Each page has a dedicated `.robot` file in `pages/`
-- Page objects contain locators and keywords for page interactions
-- Test files use page objects, not direct selectors
+### Page Object Model (UI Layer)
+This project follows the Page Object Model pattern for UI testing:
+- Page keywords are in `resources/ui/keywords/`
+- Locators (selectors) are separated in `resources/ui/locators/`
+- Tests use `resources/ui/common.resource` which imports all page objects
 - Promotes code reusability and maintainability
+
+### Endpoint Object Model (API Layer)
+- API endpoints are modeled as objects in `resources/api/keywords/`
+- Endpoint URLs are defined in `resources/api/locators/endpoints.resource`
+- Tests use `resources/api/common.resource` which imports all endpoints
+
+### Table Object Model (Database Layer)
+- Database tables are modeled as objects in `resources/db/keywords/`
+- Table names and queries are in `resources/db/locators/tables.resource`
+- Tests use `resources/db/common.resource` which imports all tables
 
 ## Docker Containerization
 
 The project includes complete Docker setup:
-- `Dockerfile`: Python 3.11 with Playwright browser support
+- `Dockerfile`: Python 3.11-slim with Node.js 20 and Playwright browser support
 - `docker-compose.yml`: Service configuration with CI-friendly image naming
-- `docker-compose.override.yml`: Optional development overrides (included)
-- Automatic browser installation and database initialization
-- Test reports accessible on host machine
+- `docker-compose.override.yml`: Development overrides for hot-reload (included in repo)
+- Automatic browser installation (`rfbrowser init`) and database initialization
+- Test reports accessible on host machine via volume mount
 
 ### Development Workflow
 
@@ -199,14 +254,15 @@ services:
 - No rebuild needed when changing tests
 - CI pipelines can use pre-built images via `image: adbros-demo:latest`
 
-## Notes
+## Project Notes
 
-- All tests are written in English
-- Page Object Model pattern is strictly followed
-- robotframework-browser (Playwright) is used for UI automation
-- Database is initialized at runtime using Robot Framework keywords
-- `init_db.py` is used only during Docker build to fetch latest data from API
-- Reports are generated in the `reports/` directory
+- **Language**: All tests are written in English
+- **Architecture**: Three-layer separation (UI, API, DB) with strict object modeling
+- **UI Automation**: Uses robotframework-browser (Playwright), not SeleniumLibrary
+- **Selectors**: Prefers `data-test` attributes when available (SauceDemo.com)
+- **Database**: Initialized via `init_db.py` during Docker build from Fake Store API
+- **Reports**: Generated in `reports/` directory with screenshots on failure
+- **Hot-Reload**: Use `docker-compose.override.yml` for development without rebuilds
 
 ## License
 
