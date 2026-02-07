@@ -2,12 +2,7 @@
 Documentation     Inventory page test suite for SauceDemo
 Library           Browser
 Library           BuiltIn
-Resource          ../../resources/config/config.resource
-Resource          ../../resources/config/test_data.resource
-Resource          ../../resources/pages/login_page.resource
-Resource          ../../resources/pages/inventory_page.resource
-Resource          ../../resources/pages/navigation_page.resource
-Resource          ../../resources/keywords/common_keywords.resource
+Resource          ../../resources/ui/common.resource
 
 Suite Setup       Setup Browser Context
 Suite Teardown    Teardown Browser Context
@@ -39,9 +34,17 @@ Add Multiple Products To Cart
     # Add first product
     ${add_buttons_1}=    Get Elements    [data-test^="add-to-cart-"]
     Click    ${add_buttons_1}[0]
+    # Wait for cart badge to update to 1
+    TRY
+        Wait For Elements State    data-test=shopping-cart-badge    visible    timeout=2s
+    EXCEPT
+        Log    Cart badge not visible after first add
+    END
     # Add second product (after first click, the button becomes remove)
     ${add_buttons_2}=    Get Elements    [data-test^="add-to-cart-"]
     Click    ${add_buttons_2}[0]
+    # Wait for cart badge to update
+    Sleep    0.5s
     ${cart_count}=    Get Cart Count
     Should Be Equal As Numbers    ${cart_count}    2
 

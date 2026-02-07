@@ -3,13 +3,7 @@ Documentation     Database test suite for Fake Store API data
 Library           DatabaseLibrary
 Library           Collections
 Library           OperatingSystem
-Resource          ../../resources/config/config.resource
-Resource          ../../resources/config/test_data.resource
-Resource          ../../resources/tables/base_table.resource
-Resource          ../../resources/tables/products_table.resource
-Resource          ../../resources/tables/users_table.resource
-Resource          ../../resources/tables/carts_table.resource
-Resource          ../../resources/keywords/database_keywords.resource
+Resource          ../../resources/db/common.resource
 
 Suite Setup       Initialize Test Database
 Suite Teardown    Disconnect From Test Database

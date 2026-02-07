@@ -1,20 +1,11 @@
 *** Settings ***
 Documentation     Page object for SauceDemo inventory/products page
 Library           Browser
-Library           BuiltIn
 Library           String
 Library           Collections
 Resource          base_page.resource
-Resource          ../locators.resource
-
-*** Variables ***
-${PRODUCT_LIST}    .inventory_list
-${PRODUCT_ITEM}    .inventory_item
-${PRODUCT_NAME}    data-test=inventory-item-name
-${PRODUCT_PRICE}    data-test=inventory-item-price
-${ADD_TO_CART_BTN}    data-test=add-to-cart-
-${REMOVE_BTN}    data-test=remove-
-${SORT_DROPDOWN}    data-test=product-sort-container
+Resource          ../locators/inventory_page.resource
+Resource          ../locators/shared_locators.resource
 
 *** Keywords ***
 Verify Inventory Page Loaded
@@ -91,7 +82,7 @@ Get Product Price By Name
     [Documentation]    Get the price of a specific product with error handling
     [Arguments]    ${product_name}
     TRY
-        VAR    ${price_locator}    //*[contains(@data-test, "inventory-item-name") and text()="${product_name}"]/../..//*[@data-test="inventory-item-price"]
+        VAR    ${price_locator}    //*[contains(@data-test, "inventory-item-name") and text()="${product_name}"]/ancestor::div[contains(@class, "inventory_item")]//*[@data-test="inventory-item-price"]
         ${price_text}=    Get Element Text Content    ${price_locator}
         Log    Got price for ${product_name}: ${price_text}    console=True
         RETURN    ${price_text}
@@ -102,7 +93,8 @@ Get Product Price By Name
 Get Cart Count
     [Documentation]    Get the number of items in the cart with error handling
     TRY
-        ${count}=    Get Element Count    ${CART_BADGE}
+        ${badge_text}=    Get Element Text Content    ${CART_BADGE}
+        ${count}=    Convert To Integer    ${badge_text}
         Log    Cart count: ${count}    console=True
         RETURN    ${count}
     EXCEPT    AS    ${err}

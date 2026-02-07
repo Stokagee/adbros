@@ -2,14 +2,7 @@
 Documentation     Checkout flow test suite for SauceDemo
 Library           Browser
 Library           BuiltIn
-Resource          ../../resources/config/config.resource
-Resource          ../../resources/config/test_data.resource
-Resource          ../../resources/pages/login_page.resource
-Resource          ../../resources/pages/inventory_page.resource
-Resource          ../../resources/pages/cart_page.resource
-Resource          ../../resources/pages/checkout_page.resource
-Resource          ../../resources/pages/navigation_page.resource
-Resource          ../../resources/keywords/common_keywords.resource
+Resource          ../../resources/ui/common.resource
 
 Suite Setup       Setup Browser Context
 Suite Teardown    Teardown Browser Context
@@ -91,8 +84,14 @@ Order Summary Is Correct
 Back To Products After Order
     [Documentation]    Verify back to products button works after order completion
     [Tags]    navigation
-    Complete Checkout Flow
     [Setup]    Setup Checkout Test
+    Click Checkout Button
+    Verify Checkout Step One Loaded
+    Fill Checkout Information    ${TEST_FIRST_NAME}    ${TEST_LAST_NAME}    ${TEST_POSTAL_CODE}
+    Click Continue Button
+    Verify Checkout Step Two Loaded
+    Click Finish Button
+    Verify Order Complete
     Click Back Home Button
     Verify On Inventory Page
 

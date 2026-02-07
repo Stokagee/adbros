@@ -5,12 +5,8 @@ Library           BuiltIn
 Library           String
 Library           Collections
 Resource          base_page.resource
-Resource          ../locators.resource
-
-*** Variables ***
-${LOGOUT_LINK}    data-test=logout-sidebar-link
-${INVENTORY_URL}    https://www.saucedemo.com/inventory.html
-${CART_URL}    https://www.saucedemo.com/cart.html
+Resource          ../locators/navigation_page.resource
+Resource          ../locators/shared_locators.resource
 
 *** Keywords ***
 Open Cart

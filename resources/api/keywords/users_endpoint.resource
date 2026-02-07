@@ -4,9 +4,7 @@ Library           RequestsLibrary
 Library           BuiltIn
 Library           Collections
 Resource          base_endpoint.resource
-
-*** Variables ***
-${USERS_ENDPOINT}    /users
+Resource          ../locators/endpoints.resource
 
 *** Keywords ***
 Get All Users

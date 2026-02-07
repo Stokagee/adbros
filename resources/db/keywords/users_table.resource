@@ -1,9 +1,9 @@
 *** Settings ***
 Documentation     Users table object with error handling
 Library           DatabaseLibrary
-Library           BuiltIn
 Library           Collections
 Resource          base_table.resource
+Resource          ../locators/tables.resource
 
 *** Keywords ***
 Get User By ID

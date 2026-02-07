@@ -1,5 +1,5 @@
 *** Settings ***
-Resource          config.resource
+Resource          ${EXECDIR}/resources/config/config.resource
 
 *** Variables ***
 # Test User Credentials (SauceDemo)

@@ -1,10 +1,6 @@
 *** Settings ***
 Documentation     Base page with common methods using Robot Framework Browser library
-Library           Browser
-Library           BuiltIn
-Library           String
-Library           Collections
-Resource          ../config/config.resource
+Resource          ${EXECDIR}/resources/config/config.resource
 
 *** Variables ***
 ${SELECTOR_TIMEOUT}    ${ELEMENT_TIMEOUT}

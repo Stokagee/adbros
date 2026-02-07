@@ -4,9 +4,7 @@ Library           RequestsLibrary
 Library           BuiltIn
 Library           Collections
 Resource          base_endpoint.resource
-
-*** Variables ***
-${PRODUCTS_ENDPOINT}    /products
+Resource          ../locators/endpoints.resource
 
 *** Keywords ***
 Get All Products

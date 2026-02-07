@@ -1,9 +1,8 @@
 *** Settings ***
 Documentation     Base database table object with error handling
 Library           DatabaseLibrary
-Library           BuiltIn
 Library           Collections
-Resource          ../config/config.resource
+Resource          ${EXECDIR}/resources/config/config.resource
 
 *** Keywords ***
 Connect To Test Database

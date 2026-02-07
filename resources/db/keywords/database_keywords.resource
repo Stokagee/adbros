@@ -1,9 +1,8 @@
 *** Settings ***
 Documentation     Database initialization and management keywords with error handling
 Library           DatabaseLibrary
-Library           BuiltIn
 Library           OperatingSystem
-Resource          ../config/config.resource
+Resource          ${EXECDIR}/resources/config/config.resource
 
 *** Keywords ***
 Initialize Test Database

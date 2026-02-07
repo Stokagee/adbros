@@ -5,13 +5,8 @@ Library           BuiltIn
 Library           String
 Library           Collections
 Resource          base_page.resource
-Resource          ../config/test_data.resource
-
-*** Variables ***
-${USERNAME_INPUT}    data-test=username
-${PASSWORD_INPUT}    data-test=password
-${LOGIN_BUTTON}    data-test=login-button
-${ERROR_MESSAGE}    data-test=error
+Resource          ../locators/login_page.resource
+Resource          ${EXECDIR}/resources/config/test_data.resource
 
 *** Keywords ***
 Open Login Page

@@ -1,29 +1,34 @@
 *** Settings ***
-Documentation     Common keywords shared across all test suites
+Documentation     Common resource file for UI tests - imports all page objects and shared keywords
 Library           Browser
-Resource          ../config/config.resource
-Resource          ../pages/login_page.resource
+Library           String
+Library           Collections
+Resource          ${EXECDIR}/resources/config/config.resource
+Resource          ${EXECDIR}/resources/config/test_data.resource
+Resource          keywords/base_page.resource
+Resource          locators/shared_locators.resource
+Resource          keywords/login_page.resource
+Resource          keywords/inventory_page.resource
+Resource          keywords/cart_page.resource
+Resource          keywords/checkout_page.resource
+Resource          keywords/navigation_page.resource
 
 *** Keywords ***
 Setup Browser Context
     [Documentation]    Set up browser context for tests
-    [Arguments]    ${headless}=${HEADLESS}
-    New Browser    ${BROWSER}    headless=${headless}
+    [Arguments]    ${browser}=${BROWSER}    ${headless}=${HEADLESS}
+    New Browser    ${browser}    headless=${headless}
     New Context    viewport={'width': ${VIEWPORT_WIDTH}, 'height': ${VIEWPORT_HEIGHT}}
 
 Teardown Browser Context
     [Documentation]    Tear down browser context after tests
-    Close Context
-    Close Browser
+    Close Context    ALL
 
 Login To Application
     [Documentation]    Login to SauceDemo application
-    [Arguments]    ${username}=standard_user    ${password}=secret_sauce
-    New Page    ${BASE_URL}
-    Fill Text    data-test=username    ${username}
-    Fill Secret    data-test=password    ${password}
-    Click    data-test=login-button
-    Wait For Load State    networkidle
+    [Arguments]    ${username}=${STANDARD_USER}    ${password}=${VALID_PASSWORD}
+    Open Login Page
+    Login As User    ${username}    ${password}
 
 Generate Random User Data
     [Documentation]    Generate random user data for checkout

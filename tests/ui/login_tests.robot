@@ -1,11 +1,7 @@
 *** Settings ***
 Documentation     Login page test suite for SauceDemo
 Library           Browser
-Resource          ../../resources/config/config.resource
-Resource          ../../resources/config/test_data.resource
-Resource          ../../resources/pages/login_page.resource
-Resource          ../../resources/pages/navigation_page.resource
-Resource          ../../resources/keywords/common_keywords.resource
+Resource          ../../resources/ui/common.resource
 
 Suite Setup       Setup Browser Context
 Suite Teardown    Teardown Browser Context

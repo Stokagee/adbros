@@ -3,7 +3,7 @@ Documentation     Base API endpoint object with error handling
 Library           RequestsLibrary
 Library           BuiltIn
 Library           Collections
-Resource          ../config/config.resource
+Resource          ${EXECDIR}/resources/config/config.resource
 
 *** Variables ***
 ${CONTENT_TYPE}    application/json

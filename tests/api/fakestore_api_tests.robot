@@ -2,12 +2,7 @@
 Documentation     API test suite for Fake Store API
 Library           RequestsLibrary
 Library           Collections
-Resource          ../../resources/config/config.resource
-Resource          ../../resources/config/test_data.resource
-Resource          ../../resources/endpoints/base_endpoint.resource
-Resource          ../../resources/endpoints/products_endpoint.resource
-Resource          ../../resources/endpoints/users_endpoint.resource
-Resource          ../../resources/endpoints/carts_endpoint.resource
+Resource          ../../resources/api/common.resource
 
 Suite Setup       Create API Session
 Suite Teardown    Delete All Sessions
