@@ -11,7 +11,7 @@ Verify Inventory Page Loaded
         Wait For Element Visible    ${PRODUCT_LIST}
         ${url}=    Get Url
         Should Contain    ${url}    inventory.html
-        Log    Inventory page loaded    console=True
+        Log    Inventory page loaded    console=${LOG_TO_CONSOLE}
     EXCEPT    AS    ${err}
         Fail    Failed to verify inventory page loaded | Error: ${err}
     END
@@ -20,7 +20,7 @@ Get Product List
     [Documentation]    Get list of all products on the page with error handling
     TRY
         ${products}=    Get Elements    ${PRODUCT_ITEM}
-        Log    Got product list    console=True
+        Log    Got product list    console=${LOG_TO_CONSOLE}
         RETURN    @{products}
     EXCEPT    AS    ${err}
         Fail    Failed to get product list | Error: ${err}
@@ -30,7 +30,7 @@ Get Product Count
     [Documentation]    Get the number of products displayed with error handling
     TRY
         ${count}=    Get Element Count    ${PRODUCT_ITEM}
-        Log    Product count: ${count}    console=True
+        Log    Product count: ${count}    console=${LOG_TO_CONSOLE}
         RETURN    ${count}
     EXCEPT    AS    ${err}
         Fail    Failed to get product count | Error: ${err}
@@ -43,7 +43,7 @@ Add Product To Cart By Name
         ${normalized}=    Normalize Text For Selector    ${product_name}
         VAR    ${add_button}    ${ADD_TO_CART_BTN}${normalized}
         Click Element    ${add_button}    context= (add ${product_name})
-        Log    Added product to cart: ${product_name}    console=True
+        Log    Added product to cart: ${product_name}    console=${LOG_TO_CONSOLE}
     EXCEPT    AS    ${err}
         Fail    Failed to add product to cart | Product: ${product_name} | Error: ${err}
     END
@@ -58,7 +58,7 @@ Add Product To Cart By Index
         Should Be True    ${index} < ${count}    msg=Index ${index} out of range (count: ${count})
         VAR    ${button}    ${add_buttons}[${index}]
         Click    ${button}
-        Log    Added product at index ${index} to cart    console=True
+        Log    Added product at index ${index} to cart    console=${LOG_TO_CONSOLE}
     EXCEPT    AS    ${err}
         Fail    Failed to add product at index ${index} | Error: ${err}
     END
@@ -70,7 +70,7 @@ Remove Product From Cart By Name
         ${normalized}=    Normalize Text For Selector    ${product_name}
         VAR    ${remove_button}    ${REMOVE_BTN}${normalized}
         Click Element    ${remove_button}    context= (remove ${product_name})
-        Log    Removed product from cart: ${product_name}    console=True
+        Log    Removed product from cart: ${product_name}    console=${LOG_TO_CONSOLE}
     EXCEPT    AS    ${err}
         Fail    Failed to remove product from cart | Product: ${product_name} | Error: ${err}
     END
@@ -81,7 +81,7 @@ Get Product Price By Name
     TRY
         VAR    ${price_locator}    //*[contains(@data-test, "inventory-item-name") and text()="${product_name}"]/ancestor::div[contains(@class, "inventory_item")]//*[@data-test="inventory-item-price"]
         ${price_text}=    Get Element Text Content    ${price_locator}
-        Log    Got price for ${product_name}: ${price_text}    console=True
+        Log    Got price for ${product_name}: ${price_text}    console=${LOG_TO_CONSOLE}
         RETURN    ${price_text}
     EXCEPT    AS    ${err}
         Fail    Failed to get product price | Product: ${product_name} | Error: ${err}
@@ -92,7 +92,7 @@ Get Cart Count
     TRY
         ${badge_text}=    Get Element Text Content    ${CART_BADGE}
         ${count}=    Convert To Integer    ${badge_text}
-        Log    Cart count: ${count}    console=True
+        Log    Cart count: ${count}    console=${LOG_TO_CONSOLE}
         RETURN    ${count}
     EXCEPT    AS    ${err}
         Fail    Failed to get cart count | Error: ${err}
@@ -102,7 +102,7 @@ Click Cart Link
     [Documentation]    Click on the shopping cart link with error handling
     TRY
         Click Element    ${CART_LINK}    context= (cart link)
-        Log    Clicked cart link    console=True
+        Log    Clicked cart link    console=${LOG_TO_CONSOLE}
     EXCEPT    AS    ${err}
         Fail    Failed to click cart link | Error: ${err}
     END
@@ -112,7 +112,7 @@ Sort Products By
     [Arguments]    ${sort_option}
     TRY
         Select Options By    ${SORT_DROPDOWN}    label    ${sort_option}
-        Log    Sorted products by: ${sort_option}    console=True
+        Log    Sorted products by: ${sort_option}    console=${LOG_TO_CONSOLE}
     EXCEPT    AS    ${err}
         Fail    Failed to sort products | Option: ${sort_option} | Error: ${err}
     END
@@ -127,7 +127,7 @@ Get Product Names
             Append To List    ${product_names}    ${text}
         END
         ${count}=    Get Length    ${product_names}
-        Log    Got ${count} product names    console=True
+        Log    Got ${count} product names    console=${LOG_TO_CONSOLE}
         RETURN    @{product_names}
     EXCEPT    AS    ${err}
         Fail    Failed to get product names | Error: ${err}
@@ -139,7 +139,7 @@ Verify Product Displayed
     TRY
         VAR    ${product_locator}    //*[contains(@data-test, "inventory-item-name") and text()="${product_name}"]
         Element Should Be Visible    ${product_locator}
-        Log    Product displayed: ${product_name}    console=True
+        Log    Product displayed: ${product_name}    console=${LOG_TO_CONSOLE}
     EXCEPT    AS    ${err}
         Fail    Failed to verify product displayed | Product: ${product_name} | Error: ${err}
     END

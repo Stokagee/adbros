@@ -26,7 +26,7 @@ Get Products By Category
             Should Be Equal    ${product}[category]    ${category}
         END
         ${count}=    Get Length    ${products}
-        Log    Got ${count} products in category: ${category}    console=True
+        Log    Got ${count} products in category: ${category}    console=${LOG_TO_CONSOLE}
         RETURN    ${products}
     EXCEPT    AS    ${err}
         Fail    Failed to get products by category | Category: ${category} | Error: ${err}

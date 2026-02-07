@@ -12,7 +12,7 @@ Create API Session
     TRY
         &{headers}=    Create Dictionary    Content-Type=${CONTENT_TYPE}
         Create Session    fakestore    ${base_url}    headers=${headers}
-        Log    API session created: fakestore -> ${base_url}    console=True
+        Log    API session created: fakestore -> ${base_url}    console=${LOG_TO_CONSOLE}
     EXCEPT    AS    ${err}
         Fail    Failed to create API session | URL: ${base_url} | Error: ${err}
     END
@@ -22,7 +22,7 @@ Send GET Request
     [Arguments]    ${endpoint}    ${expected_status}=200
     TRY
         ${response}=    GET On Session    fakestore    ${endpoint}    expected_status=${expected_status}
-        Log    GET ${endpoint} -> ${response.status_code}    console=True
+        Log    GET ${endpoint} -> ${response.status_code}    console=${LOG_TO_CONSOLE}
         RETURN    ${response}
     EXCEPT    AS    ${err}
         Fail    GET request failed | Endpoint: ${endpoint} | Expected status: ${expected_status} | Error: ${err}
@@ -33,7 +33,7 @@ Send POST Request
     [Arguments]    ${endpoint}    ${body}    ${expected_status}=200
     TRY
         ${response}=    POST On Session    fakestore    ${endpoint}    json=${body}    expected_status=${expected_status}
-        Log    POST ${endpoint} -> ${response.status_code}    console=True
+        Log    POST ${endpoint} -> ${response.status_code}    console=${LOG_TO_CONSOLE}
         RETURN    ${response}
     EXCEPT    AS    ${err}
         Fail    POST request failed | Endpoint: ${endpoint} | Body: ${body} | Expected status: ${expected_status} | Error: ${err}
@@ -44,7 +44,7 @@ Verify Response Status
     [Arguments]    ${response}    ${expected_status}
     TRY
         Status Should Be    ${expected_status}    ${response}
-        Log    Response status verified: ${expected_status}    console=True
+        Log    Response status verified: ${expected_status}    console=${LOG_TO_CONSOLE}
     EXCEPT    AS    ${err}
         Fail    Response status verification failed | Expected: ${expected_status} | Actual: ${response.status_code} | Error: ${err}
     END
@@ -56,10 +56,10 @@ Verify Response Contains
         VAR    ${body}    ${response.json()}
         IF    "${value}" == "${None}"
             Should Contain    ${body}    ${key}
-            Log    Response contains key: ${key}    console=True
+            Log    Response contains key: ${key}    console=${LOG_TO_CONSOLE}
         ELSE
             Should Be Equal    ${body}[${key}]    ${value}
-            Log    Response contains ${key}=${value}    console=True
+            Log    Response contains ${key}=${value}    console=${LOG_TO_CONSOLE}
         END
     EXCEPT    AS    ${err}
         Fail    Response verification failed | Key: ${key} | Value: ${value} | Error: ${err}
@@ -73,7 +73,7 @@ _Get All Items From Endpoint
         VAR    ${items}    ${response.json()}
         Should Not Be Empty    ${items}
         ${count}=    Get Length    ${items}
-        Log    Got ${count} ${resource_name}    console=True
+        Log    Got ${count} ${resource_name}    console=${LOG_TO_CONSOLE}
         RETURN    ${items}
     EXCEPT    AS    ${err}
         Fail    Failed to get all ${resource_name} | Error: ${err}
@@ -86,7 +86,7 @@ _Get Item By Id From Endpoint
         ${response}=    Send GET Request    ${endpoint}/${id}
         VAR    ${item}    ${response.json()}
         Should Not Be Empty    ${item}
-        Log    Got ${resource_name} with ID ${id}    console=True
+        Log    Got ${resource_name} with ID ${id}    console=${LOG_TO_CONSOLE}
         RETURN    ${item}
     EXCEPT    AS    ${err}
         Fail    Failed to get ${resource_name} by ID | ID: ${id} | Error: ${err}

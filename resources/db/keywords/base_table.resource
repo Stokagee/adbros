@@ -6,9 +6,9 @@ Resource          ${EXECDIR}/resources/config/config.resource
 Connect To Test Database
     [Documentation]    Connect to test database with error handling
     TRY
-        Log    Connecting to database: ${DB_PATH}    console=True
+        Log    Connecting to database: ${DB_PATH}    console=${LOG_TO_CONSOLE}
         Connect To Database    ${DB_API}    ${DB_PATH}
-        Log    Database connected    console=True
+        Log    Database connected    console=${LOG_TO_CONSOLE}
     EXCEPT    AS    ${err}
         Fail    Failed to connect to database | Path: ${DB_PATH} | API: ${DB_API} | Error: ${err}
     END
@@ -17,7 +17,7 @@ Disconnect From Test Database
     [Documentation]    Disconnect from database with error handling
     TRY
         Disconnect From Database
-        Log    Database disconnected    console=True
+        Log    Database disconnected    console=${LOG_TO_CONSOLE}
     EXCEPT    AS    ${err}
         Log    Failed to disconnect from database | Error: ${err}    level=WARN
     END
@@ -28,7 +28,7 @@ Table Must Contain Data
     TRY
         ${count}=    Row Count    SELECT COUNT(*) FROM ${table_name}
         Should Be True    ${count} > 0
-        Log    Table '${table_name}' contains ${count} rows    console=True
+        Log    Table '${table_name}' contains ${count} rows    console=${LOG_TO_CONSOLE}
     EXCEPT    AS    ${err}
         Fail    Failed to verify table contains data | Table: ${table_name} | Error: ${err}
     END
@@ -38,7 +38,7 @@ Get Row Count
     [Arguments]    ${table_name}
     TRY
         ${count}=    Row Count    SELECT COUNT(*) FROM ${table_name}
-        Log    Table '${table_name}' has ${count} rows    console=True
+        Log    Table '${table_name}' has ${count} rows    console=${LOG_TO_CONSOLE}
         RETURN    ${count}
     EXCEPT    AS    ${err}
         Fail    Failed to get row count | Table: ${table_name} | Error: ${err}
@@ -48,10 +48,10 @@ Execute Query
     [Documentation]    Execute SQL query and return results with error handling
     [Arguments]    ${sql}
     TRY
-        Log    Executing query: ${sql}    console=True
+        Log    Executing query: ${sql}    console=${LOG_TO_CONSOLE}
         @{results}=    Query    ${sql}
         ${row_count}=    Get Length    ${results}
-        Log    Query returned ${row_count} rows    console=True
+        Log    Query returned ${row_count} rows    console=${LOG_TO_CONSOLE}
         RETURN    @{results}
     EXCEPT    AS    ${err}
         Fail    Query failed | SQL: ${sql} | Error: ${err}
@@ -61,10 +61,10 @@ Get Single Row
     [Documentation]    Execute query and return first row with error handling
     [Arguments]    ${sql}
     TRY
-        Log    Executing query for single row: ${sql}    console=True
+        Log    Executing query for single row: ${sql}    console=${LOG_TO_CONSOLE}
         @{row}=    Query    ${sql}
         Should Not Be Empty    ${row}    msg=Query returned no results
-        Log    Got single row    console=True
+        Log    Got single row    console=${LOG_TO_CONSOLE}
         RETURN    @{row}
     EXCEPT    AS    ${err}
         Fail    Failed to get single row | SQL: ${sql} | Error: ${err}
@@ -75,7 +75,7 @@ _Get Table Item Count
     [Arguments]    ${table_name}
     TRY
         ${count}=    Row Count    SELECT COUNT(*) FROM ${table_name}
-        Log    Table ${table_name} has ${count} rows    console=True
+        Log    Table ${table_name} has ${count} rows    console=${LOG_TO_CONSOLE}
         RETURN    ${count}
     EXCEPT    AS    ${err}
         Fail    Failed to get row count | Table: ${table_name} | Error: ${err}
@@ -90,7 +90,7 @@ _Get Table Item By Id
         IF    ${count} == 0
             Fail    No ${table_name} found with ID ${id}
         END
-        Log    Found ${table_name} with ID ${id}    console=True
+        Log    Found ${table_name} with ID ${id}    console=${LOG_TO_CONSOLE}
         RETURN    @{rows}[0]
     EXCEPT    AS    ${err}
         Fail    Failed to get ${table_name} by ID | ID: ${id} | Error: ${err}

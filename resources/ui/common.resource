@@ -42,23 +42,23 @@ Clean Cart If Needed
     [Documentation]    Remove all items from cart if any exist
     TRY
         ${states}=    Get Element States    data-test=shopping-cart-badge
-        Log    Cart badge exists, cleaning cart    console=True
+        Log    Cart badge exists, cleaning cart    console=${LOG_TO_CONSOLE}
         Click    data-test=shopping-cart-link
         ${items}=    Browser.Get Element Count    .cart_item
-        Log    Found ${items} items to remove    console=True
+        Log    Found ${items} items to remove    console=${LOG_TO_CONSOLE}
         FOR    ${i}    IN RANGE    ${items}
             ${remove_buttons}=    Get Elements    [data-test^="remove-"]
             ${count}=    Get Length    ${remove_buttons}
-            Log    Iteration ${i}: Found ${count} remove buttons    console=True
+            Log    Iteration ${i}: Found ${count} remove buttons    console=${LOG_TO_CONSOLE}
             IF    ${count} > 0
                 Click    ${remove_buttons}[0]
-                Log    Removed item ${i}    console=True
+                Log    Removed item ${i}    console=${LOG_TO_CONSOLE}
             END
         END
-        Log    Cart cleaned, returning to inventory    console=True
+        Log    Cart cleaned, returning to inventory    console=${LOG_TO_CONSOLE}
         Go To    ${BASE_URL}/inventory.html
     EXCEPT    AS    ${err}
-        Log    No cart badge found or cart already empty: ${err}    console=True
+        Log    No cart badge found or cart already empty: ${err}    console=${LOG_TO_CONSOLE}
     END
 
 Open Login Page And Login

@@ -9,14 +9,14 @@ Get Product By ID
     [Arguments]    ${product_id}
     VAR    ${sql}    SELECT title, price, category FROM products WHERE id = ${product_id}
     TRY
-        Log    Getting product by ID: ${product_id}    console=True
+        Log    Getting product by ID: ${product_id}    console=${LOG_TO_CONSOLE}
         @{row}=    Query    ${sql}
         Should Not Be Empty    ${row}    msg=Product ID ${product_id} not found
         # Destructuring unpack for safe column access (Set Variable kept for destructuring)
         ${title}    ${price}    ${category}=    Set Variable    @{row}[0]
         ${price_num}=    Convert To Number    ${price}
         &{product}=    Create Dictionary    id=${product_id}    title=${title}    price=${price_num}    category=${category}
-        Log    Found product: ${title} ($${price_num})    console=True
+        Log    Found product: ${title} ($${price_num})    console=${LOG_TO_CONSOLE}
         RETURN    &{product}
     EXCEPT    AS    ${err}
         Fail    Get Product By ID failed | Product ID: ${product_id} | Error: ${err}
@@ -33,7 +33,7 @@ Verify Product Exists
     TRY
         ${count}=    Row Count    SELECT COUNT(*) FROM products WHERE id = ${product_id}
         Should Be True    ${count} > 0
-        Log    Product ${product_id} exists    console=True
+        Log    Product ${product_id} exists    console=${LOG_TO_CONSOLE}
     EXCEPT    AS    ${err}
         Fail    Failed to verify product exists | Product ID: ${product_id} | Error: ${err}
     END

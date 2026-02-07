@@ -9,13 +9,13 @@ Get User By ID
     [Arguments]    ${user_id}
     VAR    ${sql}    SELECT email, username, name FROM users WHERE id = ${user_id}
     TRY
-        Log    Getting user by ID: ${user_id}    console=True
+        Log    Getting user by ID: ${user_id}    console=${LOG_TO_CONSOLE}
         @{row}=    Query    ${sql}
         Should Not Be Empty    ${row}    msg=User ID ${user_id} not found
         # Destructuring unpack for safe column access (Set Variable kept for destructuring)
         ${email}    ${username}    ${name}=    Set Variable    @{row}[0]
         &{user}=    Create Dictionary    id=${user_id}    email=${email}    username=${username}    name=${name}
-        Log    Found user: ${username} (${email})    console=True
+        Log    Found user: ${username} (${email})    console=${LOG_TO_CONSOLE}
         RETURN    &{user}
     EXCEPT    AS    ${err}
         Fail    Get User By ID failed | User ID: ${user_id} | Error: ${err}
@@ -32,7 +32,7 @@ Verify User Exists
     TRY
         ${count}=    Row Count    SELECT COUNT(*) FROM users WHERE id = ${user_id}
         Should Be True    ${count} > 0
-        Log    User ${user_id} exists    console=True
+        Log    User ${user_id} exists    console=${LOG_TO_CONSOLE}
     EXCEPT    AS    ${err}
         Fail    Failed to verify user exists | User ID: ${user_id} | Error: ${err}
     END

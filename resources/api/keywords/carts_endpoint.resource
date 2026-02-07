@@ -22,7 +22,7 @@ Get Carts By User
         ${response}=    Send GET Request    ${CARTS_ENDPOINT}/user/${user_id}
         VAR    ${carts}    ${response.json()}
         ${count}=    Get Length    ${carts}
-        Log    Got ${count} carts for user: ${user_id}    console=True
+        Log    Got ${count} carts for user: ${user_id}    console=${LOG_TO_CONSOLE}
         RETURN    ${carts}
     EXCEPT    AS    ${err}
         Fail    Failed to get carts by user | User ID: ${user_id} | Error: ${err}

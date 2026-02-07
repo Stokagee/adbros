@@ -10,7 +10,7 @@ Verify Cart Page Loaded
         Wait For Page Load
         ${url}=    Get Url
         Should Contain    ${url}    cart.html
-        Log    Cart page loaded    console=True
+        Log    Cart page loaded    console=${LOG_TO_CONSOLE}
     EXCEPT    AS    ${err}
         Fail    Failed to verify cart page loaded | Error: ${err}
     END
@@ -19,7 +19,7 @@ Get Cart Items Count
     [Documentation]    Get the number of items in the cart with error handling
     TRY
         ${count}=    Get Element Count    ${CART_ITEM}
-        Log    Cart items count: ${count}    console=True
+        Log    Cart items count: ${count}    console=${LOG_TO_CONSOLE}
         RETURN    ${count}
     EXCEPT    AS    ${err}
         Fail    Failed to get cart items count | Error: ${err}
@@ -34,7 +34,7 @@ Get Cart Item Names
             ${text}=    Get Text    ${element}
             Append To List    ${names}    ${text}
         END
-        Log    Cart items: ${names}    console=True
+        Log    Cart items: ${names}    console=${LOG_TO_CONSOLE}
         RETURN    @{names}
     EXCEPT    AS    ${err}
         Fail    Failed to get cart item names | Error: ${err}
@@ -49,7 +49,7 @@ Get Cart Item Quantities
             ${text}=    Get Text    ${element}
             Append To List    ${quantities}    ${text}
         END
-        Log    Cart quantities: ${quantities}    console=True
+        Log    Cart quantities: ${quantities}    console=${LOG_TO_CONSOLE}
         RETURN    @{quantities}
     EXCEPT    AS    ${err}
         Fail    Failed to get cart item quantities | Error: ${err}
@@ -62,7 +62,7 @@ Remove Item From Cart By Name
         ${normalized}=    Normalize Text For Selector    ${item_name}
         VAR    ${remove_button}    ${REMOVE_BUTTON}${normalized}
         Click Element    ${remove_button}    context= (remove ${item_name})
-        Log    Removed item from cart: ${item_name}    console=True
+        Log    Removed item from cart: ${item_name}    console=${LOG_TO_CONSOLE}
     EXCEPT    AS    ${err}
         Fail    Failed to remove item from cart | Item: ${item_name} | Error: ${err}
     END
@@ -71,7 +71,7 @@ Click Checkout Button
     [Documentation]    Click the checkout button to proceed with error handling
     TRY
         Click Element    ${CHECKOUT_BUTTON}    context= (checkout button)
-        Log    Clicked checkout button    console=True
+        Log    Clicked checkout button    console=${LOG_TO_CONSOLE}
     EXCEPT    AS    ${err}
         Fail    Failed to click checkout button | Error: ${err}
     END
@@ -80,7 +80,7 @@ Click Continue Shopping
     [Documentation]    Click continue shopping to return to inventory with error handling
     TRY
         Click Element    ${CONTINUE_SHOPPING_BUTTON}    context= (continue shopping)
-        Log    Clicked continue shopping    console=True
+        Log    Clicked continue shopping    console=${LOG_TO_CONSOLE}
     EXCEPT    AS    ${err}
         Fail    Failed to click continue shopping | Error: ${err}
     END
@@ -91,7 +91,7 @@ Verify Item In Cart
     TRY
         VAR    ${item_locator}    //*[contains(@data-test, "inventory-item-name") and text()="${item_name}"]
         Element Should Be Visible    ${item_locator}
-        Log    Item verified in cart: ${item_name}    console=True
+        Log    Item verified in cart: ${item_name}    console=${LOG_TO_CONSOLE}
     EXCEPT    AS    ${err}
         Fail    Failed to verify item in cart | Item: ${item_name} | Error: ${err}
     END
@@ -106,7 +106,7 @@ Get Cart Total
             ${price}=    Remove String    ${price_text}    $    ,
             ${total}=    Evaluate    ${total} + float(${price})
         END
-        Log    Cart total: ${total}    console=True
+        Log    Cart total: ${total}    console=${LOG_TO_CONSOLE}
         RETURN    ${total}
     EXCEPT    AS    ${err}
         Fail    Failed to calculate cart total | Error: ${err}
@@ -117,7 +117,7 @@ Verify Cart Empty
     TRY
         ${count}=    Get Cart Items Count
         Should Be Equal As Numbers    ${count}    0
-        Log    Cart is empty    console=True
+        Log    Cart is empty    console=${LOG_TO_CONSOLE}
     EXCEPT    AS    ${err}
         Fail    Failed to verify cart empty | Error: ${err}
     END

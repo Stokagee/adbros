@@ -9,7 +9,7 @@ Open Cart
     [Documentation]    Navigate to shopping cart with error handling
     TRY
         Click Element    ${CART_LINK}    context= (cart link)
-        Log    Opened cart    console=True
+        Log    Opened cart    console=${LOG_TO_CONSOLE}
     EXCEPT    AS    ${err}
         Fail    Failed to open cart | Error: ${err}
     END
@@ -19,10 +19,10 @@ Get Cart Badge Count
     TRY
         ${states}=    Get Element States    ${CART_BADGE}
         ${count}=    Get Element Text Content    ${CART_BADGE}
-        Log    Cart badge count: ${count}    console=True
+        Log    Cart badge count: ${count}    console=${LOG_TO_CONSOLE}
         RETURN    ${count}
     EXCEPT    AS    ${err}
-        Log    Cart badge not found, returning 0    console=True
+        Log    Cart badge not found, returning 0    console=${LOG_TO_CONSOLE}
         RETURN    ${0}
     END
 
@@ -30,7 +30,7 @@ Click Menu Button
     [Documentation]    Open the side menu with error handling
     TRY
         Click Element    ${MENU_BUTTON}    context= (menu button)
-        Log    Clicked menu button    console=True
+        Log    Clicked menu button    console=${LOG_TO_CONSOLE}
     EXCEPT    AS    ${err}
         Fail    Failed to click menu button | Error: ${err}
     END
@@ -42,7 +42,7 @@ Logout
         VAR    ${logout_link}    data-test=logout-sidebar-link
         Wait For Element Visible    ${logout_link}
         Click Element    ${logout_link}    context= (logout link)
-        Log    Logged out    console=True
+        Log    Logged out    console=${LOG_TO_CONSOLE}
     EXCEPT    AS    ${err}
         Fail    Failed to logout | Error: ${err}
     END
@@ -51,7 +51,7 @@ Get Current URL
     [Documentation]    Get the current page URL with error handling
     TRY
         ${url}=    Get Url
-        Log    Current URL: ${url}    console=True
+        Log    Current URL: ${url}    console=${LOG_TO_CONSOLE}
         RETURN    ${url}
     EXCEPT    AS    ${err}
         Fail    Failed to get current URL | Error: ${err}
@@ -62,7 +62,7 @@ Verify On Inventory Page
     TRY
         ${url}=    Get Current URL
         Should Contain    ${url}    inventory.html
-        Log    Verified on inventory page    console=True
+        Log    Verified on inventory page    console=${LOG_TO_CONSOLE}
     EXCEPT    AS    ${err}
         Fail    Failed to verify on inventory page | Error: ${err}
     END
@@ -72,7 +72,7 @@ Verify On Cart Page
     TRY
         ${url}=    Get Current URL
         Should Contain    ${url}    cart.html
-        Log    Verified on cart page    console=True
+        Log    Verified on cart page    console=${LOG_TO_CONSOLE}
     EXCEPT    AS    ${err}
         Fail    Failed to verify on cart page | Error: ${err}
     END
@@ -82,7 +82,7 @@ Navigate To Inventory
     TRY
         Go To    ${INVENTORY_URL}
         Wait For Page Load
-        Log    Navigated to inventory page    console=True
+        Log    Navigated to inventory page    console=${LOG_TO_CONSOLE}
     EXCEPT    AS    ${err}
         Fail    Failed to navigate to inventory | URL: ${INVENTORY_URL} | Error: ${err}
     END
@@ -92,7 +92,7 @@ Navigate To Cart
     TRY
         Go To    ${CART_URL}
         Wait For Page Load
-        Log    Navigated to cart page    console=True
+        Log    Navigated to cart page    console=${LOG_TO_CONSOLE}
     EXCEPT    AS    ${err}
         Fail    Failed to navigate to cart | URL: ${CART_URL} | Error: ${err}
     END

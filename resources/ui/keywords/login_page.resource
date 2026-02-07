@@ -11,7 +11,7 @@ Open Login Page
         New Page    ${BASE_URL}
         Wait For Page Load
         Wait For Element Visible    ${USERNAME_INPUT}
-        Log    Login page opened    console=True
+        Log    Login page opened    console=${LOG_TO_CONSOLE}
     EXCEPT    AS    ${err}
         Fail    Failed to open login page | URL: ${BASE_URL} | Error: ${err}
     END
@@ -24,7 +24,7 @@ Login As User
         Wait For Element Visible    ${PASSWORD_INPUT}
         Fill Secret    ${PASSWORD_INPUT}    $password
         Click Element    ${LOGIN_BUTTON}    context= (login button)
-        Log    Logged in as: ${username}    console=True
+        Log    Logged in as: ${username}    console=${LOG_TO_CONSOLE}
     EXCEPT    AS    ${err}
         Fail    Login failed for user '${username}' | Error: ${err}
     END
@@ -51,7 +51,7 @@ Verify Login Error Displayed
     TRY
         Wait For Element Visible    ${ERROR_MESSAGE}
         Element Should Contain Text    ${ERROR_MESSAGE}    ${expected_error}
-        Log    Login error verified: ${expected_error}    console=True
+        Log    Login error verified: ${expected_error}    console=${LOG_TO_CONSOLE}
     EXCEPT    AS    ${err}
         Fail    Failed to verify login error | Expected: ${expected_error} | Error: ${err}
     END
@@ -60,7 +60,7 @@ Get Error Message
     [Documentation]    Get the text of the error message with error handling
     TRY
         ${error_text}=    Get Element Text Content    ${ERROR_MESSAGE}
-        Log    Got error message    console=True
+        Log    Got error message    console=${LOG_TO_CONSOLE}
         RETURN    ${error_text}
     EXCEPT    AS    ${err}
         Fail    Failed to get error message | Error: ${err}
@@ -70,7 +70,7 @@ Verify Username Field Visible
     [Documentation]    Verify username input field is visible with error handling
     TRY
         Element Should Be Visible    ${USERNAME_INPUT}
-        Log    Username field is visible    console=True
+        Log    Username field is visible    console=${LOG_TO_CONSOLE}
     EXCEPT    AS    ${err}
         Fail    Failed to verify username field visible | Error: ${err}
     END
@@ -79,7 +79,7 @@ Verify Password Field Visible
     [Documentation]    Verify password input field is visible with error handling
     TRY
         Element Should Be Visible    ${PASSWORD_INPUT}
-        Log    Password field is visible    console=True
+        Log    Password field is visible    console=${LOG_TO_CONSOLE}
     EXCEPT    AS    ${err}
         Fail    Failed to verify password field visible | Error: ${err}
     END
@@ -88,7 +88,7 @@ Verify Login Button Visible
     [Documentation]    Verify login button is visible with error handling
     TRY
         Element Should Be Visible    ${LOGIN_BUTTON}
-        Log    Login button is visible    console=True
+        Log    Login button is visible    console=${LOG_TO_CONSOLE}
     EXCEPT    AS    ${err}
         Fail    Failed to verify login button visible | Error: ${err}
     END
@@ -98,7 +98,7 @@ Clear Login Form
     TRY
         Fill Text Input    ${USERNAME_INPUT}    ${EMPTY}
         Fill Secret Input    ${PASSWORD_INPUT}    ${EMPTY}
-        Log    Login form cleared    console=True
+        Log    Login form cleared    console=${LOG_TO_CONSOLE}
     EXCEPT    AS    ${err}
         Fail    Failed to clear login form | Error: ${err}
     END

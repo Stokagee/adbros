@@ -20,3 +20,6 @@ ${VIEWPORT_HEIGHT}        1080
 ${DEFAULT_TIMEOUT}        10s
 ${PAGE_LOAD_TIMEOUT}      30s
 ${ELEMENT_TIMEOUT}        5s
+
+# Logging Configuration
+${LOG_TO_CONSOLE}        ${True}

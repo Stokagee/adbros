@@ -9,13 +9,13 @@ Get Cart By ID
     [Arguments]    ${cart_id}
     VAR    ${sql}    SELECT user_id, date, products FROM carts WHERE id = ${cart_id}
     TRY
-        Log    Getting cart by ID: ${cart_id}    console=True
+        Log    Getting cart by ID: ${cart_id}    console=${LOG_TO_CONSOLE}
         @{row}=    Query    ${sql}
         Should Not Be Empty    ${row}    msg=Cart ID ${cart_id} not found
         # Destructuring unpack for safe column access (Set Variable kept for destructuring)
         ${user_id}    ${date}    ${products}=    Set Variable    @{row}[0]
         &{cart}=    Create Dictionary    id=${cart_id}    user_id=${user_id}    date=${date}    products=${products}
-        Log    Found cart: ${cart_id} for user ${user_id}    console=True
+        Log    Found cart: ${cart_id} for user ${user_id}    console=${LOG_TO_CONSOLE}
         RETURN    &{cart}
     EXCEPT    AS    ${err}
         Fail    Get Cart By ID failed | Cart ID: ${cart_id} | Error: ${err}
@@ -31,7 +31,7 @@ Get Carts By User
     [Arguments]    ${user_id}
     VAR    ${sql}    SELECT id, user_id, date, products FROM carts WHERE user_id = ${user_id}
     TRY
-        Log    Getting carts for user: ${user_id}    console=True
+        Log    Getting carts for user: ${user_id}    console=${LOG_TO_CONSOLE}
         @{rows}=    Query    ${sql}
         @{carts}=    Create List
         FOR    ${row}    IN    @{rows}
@@ -41,7 +41,7 @@ Get Carts By User
             Append To List    ${carts}    ${cart}
         END
         ${count}=    Get Length    ${carts}
-        Log    Found ${count} carts for user ${user_id}    console=True
+        Log    Found ${count} carts for user ${user_id}    console=${LOG_TO_CONSOLE}
         RETURN    @{carts}
     EXCEPT    AS    ${err}
         Fail    Get Carts By User failed | User ID: ${user_id} | Error: ${err}

@@ -62,7 +62,7 @@ Remove Product From Cart
         ${cart_count}=    Get Cart Count
         Should Be Equal As Numbers    ${cart_count}    0
     EXCEPT
-        Log    Cart badge removed (expected behavior)    console=True
+        Log    Cart badge removed (expected behavior)    console=${LOG_TO_CONSOLE}
     END
 
 Sort Products By Name Ascending

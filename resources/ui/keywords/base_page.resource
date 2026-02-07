@@ -12,7 +12,7 @@ Wait For Element Visible
     [Arguments]    ${locator}    ${timeout}=${SELECTOR_TIMEOUT}
     TRY
         Wait For Elements State    ${locator}    visible    ${timeout}
-        Log    Element visible: ${locator}    console=True
+        Log    Element visible: ${locator}    console=${LOG_TO_CONSOLE}
     EXCEPT    AS    ${err}
         Fail    Failed to wait for element visibility | Locator: ${locator} | Timeout: ${timeout} | Error: ${err}
     END
@@ -22,7 +22,7 @@ Wait For Element Enabled
     [Arguments]    ${locator}    ${timeout}=${SELECTOR_TIMEOUT}
     TRY
         Wait For Elements State    ${locator}    enabled    ${timeout}
-        Log    Element enabled: ${locator}    console=True
+        Log    Element enabled: ${locator}    console=${LOG_TO_CONSOLE}
     EXCEPT    AS    ${err}
         Fail    Failed to wait for element enabled | Locator: ${locator} | Timeout: ${timeout} | Error: ${err}
     END
@@ -32,7 +32,7 @@ Wait For Element Hidden
     [Arguments]    ${locator}    ${timeout}=${SELECTOR_TIMEOUT}
     TRY
         Wait For Elements State    ${locator}    hidden    ${timeout}
-        Log    Element hidden: ${locator}    console=True
+        Log    Element hidden: ${locator}    console=${LOG_TO_CONSOLE}
     EXCEPT    AS    ${err}
         Fail    Failed to wait for element hidden | Locator: ${locator} | Timeout: ${timeout} | Error: ${err}
     END
@@ -43,7 +43,7 @@ Click Element
     TRY
         Wait For Element Enabled    ${locator}
         Click    ${locator}
-        Log    Clicked element: ${locator} ${context}    console=True
+        Log    Clicked element: ${locator} ${context}    console=${LOG_TO_CONSOLE}
     EXCEPT    AS    ${err}
         Fail    Failed to click element | Locator: ${locator} | Context: ${context} | Error: ${err}
     END
@@ -54,7 +54,7 @@ Fill Text Input
     TRY
         Wait For Element Visible    ${locator}
         Fill Text    ${locator}    ${text}
-        Log    Entered text in: ${locator} ${context}    console=True
+        Log    Entered text in: ${locator} ${context}    console=${LOG_TO_CONSOLE}
     EXCEPT    AS    ${err}
         Fail    Failed to enter text | Locator: ${locator} | Context: ${context} | Error: ${err}
     END
@@ -69,7 +69,7 @@ Fill Secret Input
         ELSE
             Fill Secret    ${locator}    $secret
         END
-        Log    Entered secret in: ${locator} ${context}    console=True
+        Log    Entered secret in: ${locator} ${context}    console=${LOG_TO_CONSOLE}
     EXCEPT    AS    ${err}
         Fail    Failed to enter secret | Locator: ${locator} | Context: ${context} | Error: ${err}
     END
@@ -79,7 +79,7 @@ Get Element Text Content
     [Arguments]    ${locator}    ${context}=${EMPTY}
     TRY
         ${text}=    Get Text    ${locator}
-        Log    Got text from: ${locator}    console=True
+        Log    Got text from: ${locator}    console=${LOG_TO_CONSOLE}
         RETURN    ${text}
     EXCEPT    AS    ${err}
         Fail    Failed to get text content | Locator: ${locator} | Context: ${context} | Error: ${err}
@@ -90,7 +90,7 @@ Get Element Count
     [Arguments]    ${locator}
     TRY
         ${count}=    Browser.Get Element Count    ${locator}
-        Log    Element count for '${locator}': ${count}    console=True
+        Log    Element count for '${locator}': ${count}    console=${LOG_TO_CONSOLE}
         RETURN    ${count}
     EXCEPT    AS    ${err}
         Fail    Failed to get element count | Locator: ${locator} | Error: ${err}
@@ -102,7 +102,7 @@ Element Should Be Visible
     TRY
         ${states}=    Get Element States    ${locator}
         Should Contain    ${states}    visible
-        Log    Element is visible: ${locator}    console=True
+        Log    Element is visible: ${locator}    console=${LOG_TO_CONSOLE}
     EXCEPT    AS    ${err}
         Fail    Element not visible | Locator: ${locator} | Error: ${err}
     END
@@ -113,7 +113,7 @@ Element Should Contain Text
     TRY
         ${actual_text}=    Get Text    ${locator}
         Should Contain    ${actual_text}    ${expected_text}
-        Log    Element contains expected text: ${locator}    console=True
+        Log    Element contains expected text: ${locator}    console=${LOG_TO_CONSOLE}
     EXCEPT    AS    ${err}
         Fail    Element does not contain expected text | Locator: ${locator} | Expected: ${expected_text} | Error: ${err}
     END
@@ -123,7 +123,7 @@ Wait For Page Load
     [Arguments]    ${timeout}=${PAGE_LOAD_TIMEOUT}
     TRY
         Wait For Load State    networkidle    ${timeout}
-        Log    Page loaded    console=True
+        Log    Page loaded    console=${LOG_TO_CONSOLE}
     EXCEPT    AS    ${err}
         Fail    Page load failed | Timeout: ${timeout} | Error: ${err}
     END
@@ -133,7 +133,7 @@ Take Screenshot On Failure
     [Arguments]    ${filename}=screenshot.png
     TRY
         Take Screenshot    ${filename}
-        Log    Screenshot saved: ${filename}    console=True
+        Log    Screenshot saved: ${filename}    console=${LOG_TO_CONSOLE}
     EXCEPT    AS    ${err}
         Log    Failed to take screenshot | Filename: ${filename} | Error: ${err}    level=WARN
     END
@@ -144,7 +144,7 @@ Normalize Text For Selector
     TRY
         ${normalized}=    Convert To Lower Case    ${text}
         ${normalized}=    Replace String    ${normalized}    ${SPACE}    -
-        Log    Normalized text: ${normalized}    console=True
+        Log    Normalized text: ${normalized}    console=${LOG_TO_CONSOLE}
         RETURN    ${normalized}
     EXCEPT    AS    ${err}
         Fail    Failed to normalize text | Text: ${text} | Error: ${err}
