@@ -39,7 +39,8 @@ RUN node --version && npm --version
 
 # Copy requirements and install Python packages
 COPY requirements.txt .
-RUN pip install --no-cache-dir -r requirements.txt
+RUN pip install --upgrade pip && \
+    pip install --no-cache-dir -r requirements.txt
 
 # Initialize Playwright browsers (node should now be in PATH)
 RUN rfbrowser init --skip-browsers

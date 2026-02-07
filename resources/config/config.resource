@@ -22,4 +22,4 @@ ${PAGE_LOAD_TIMEOUT}      30s
 ${ELEMENT_TIMEOUT}        5s
 
 # Logging Configuration
-${LOG_TO_CONSOLE}        ${True}
+${LOG_TO_CONSOLE}        ${False}
