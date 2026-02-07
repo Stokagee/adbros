@@ -1,0 +1,5 @@
+robotframework>=6.1.0
+robotframework-browser>=18.0.0
+robotframework-requests>=0.9.6
+robotframework-databaselibrary>=1.2.5
+requests>=2.31.0

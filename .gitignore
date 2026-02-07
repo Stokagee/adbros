@@ -1,0 +1,62 @@
+# Robot Framework outputs
+reports/
+output.xml
+log.html
+report.html
+*.png
+screenshot/
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+
+# Virtual environments
+venv/
+ENV/
+env/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# Robot Framework specific
+.robot/
+robotframework-lint-result.json
+
+# Database files (generated)
+resources/*.db
+resources/*.db-journal
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Test artifacts
+playwright-report/
+test-results/
+tracing/
+CLAUDE.md
+nul
+.claude/settings.local.json
+.playwright-mcp/

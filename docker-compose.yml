@@ -1,0 +1,11 @@
+version: '3.8'
+
+services:
+  robot-tests:
+    build: .
+    volumes:
+      - ./reports:/app/reports
+    environment:
+      - HEADLESS=true
+      - BROWSER=chromium
+    command: ["robot", "--outputdir", "reports", "--include", "demo", "tests"]
