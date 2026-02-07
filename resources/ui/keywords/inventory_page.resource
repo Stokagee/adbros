@@ -1,8 +1,5 @@
 *** Settings ***
 Documentation     Page object for SauceDemo inventory/products page
-Library           Browser
-Library           String
-Library           Collections
 Resource          base_page.resource
 Resource          ../locators/inventory_page.resource
 Resource          ../locators/shared_locators.resource

@@ -1,5 +1,8 @@
 *** Settings ***
 Documentation     Common resource file for API tests - imports all endpoint objects
+Library           RequestsLibrary
+Library           BuiltIn
+Library           Collections
 Resource          ${EXECDIR}/resources/config/config.resource
 Resource          ${EXECDIR}/resources/config/test_data.resource
 Resource          keywords/base_endpoint.resource

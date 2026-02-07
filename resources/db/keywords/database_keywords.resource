@@ -1,7 +1,5 @@
 *** Settings ***
 Documentation     Database initialization and management keywords with error handling
-Library           DatabaseLibrary
-Library           OperatingSystem
 Resource          ${EXECDIR}/resources/config/config.resource
 
 *** Keywords ***

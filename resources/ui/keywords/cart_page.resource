@@ -1,8 +1,5 @@
 *** Settings ***
 Documentation     Page object for SauceDemo shopping cart page
-Library           Browser
-Library           String
-Library           Collections
 Resource          base_page.resource
 Resource          ../locators/cart_page.resource
 

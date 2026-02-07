@@ -1,9 +1,5 @@
 *** Settings ***
 Documentation     Page object for SauceDemo login page
-Library           Browser
-Library           BuiltIn
-Library           String
-Library           Collections
 Resource          base_page.resource
 Resource          ../locators/login_page.resource
 Resource          ${EXECDIR}/resources/config/test_data.resource

@@ -1,5 +1,8 @@
 *** Settings ***
 Documentation     Common resource file for database tests - imports all table objects
+Library           DatabaseLibrary
+Library           Collections
+Library           OperatingSystem
 Resource          ${EXECDIR}/resources/config/config.resource
 Resource          keywords/base_table.resource
 Resource          keywords/products_table.resource

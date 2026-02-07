@@ -3,6 +3,7 @@ Documentation     Common resource file for UI tests - imports all page objects a
 Library           Browser
 Library           String
 Library           Collections
+Library           BuiltIn
 Resource          ${EXECDIR}/resources/config/config.resource
 Resource          ${EXECDIR}/resources/config/test_data.resource
 Resource          keywords/base_page.resource

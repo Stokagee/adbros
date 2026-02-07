@@ -1,9 +1,5 @@
 *** Settings ***
 Documentation     Page object for navigation and header elements
-Library           Browser
-Library           BuiltIn
-Library           String
-Library           Collections
 Resource          base_page.resource
 Resource          ../locators/navigation_page.resource
 Resource          ../locators/shared_locators.resource

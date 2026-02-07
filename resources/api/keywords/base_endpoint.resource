@@ -1,8 +1,5 @@
 *** Settings ***
 Documentation     Base API endpoint object with error handling
-Library           RequestsLibrary
-Library           BuiltIn
-Library           Collections
 Resource          ${EXECDIR}/resources/config/config.resource
 
 *** Variables ***

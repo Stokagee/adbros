@@ -1,8 +1,5 @@
 *** Settings ***
 Documentation     Users API endpoint object with error handling
-Library           RequestsLibrary
-Library           BuiltIn
-Library           Collections
 Resource          base_endpoint.resource
 Resource          ../locators/endpoints.resource
 
