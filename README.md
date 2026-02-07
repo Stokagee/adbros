@@ -20,7 +20,7 @@ This project demonstrates professional test automation practices using:
 
 **Linux/macOS:**
 ```bash
-# Run tests (fast, uses existing image)
+# Run tests (fast, uses existing image in the root of the project folder)
 ./run_tests.sh
 
 # Force rebuild when dependencies change
@@ -29,7 +29,7 @@ This project demonstrates professional test automation practices using:
 
 **Windows:**
 ```batch
-# Run tests (fast, uses existing image)
+# Run tests (fast, uses existing image in the root of the project folder)
 run_tests.bat
 
 # Force rebuild when dependencies change
@@ -140,25 +140,42 @@ adbros/
 - Schema validation
 - Data consistency checks
 
-## Running Tests Locally (Without Docker)
+## Local Development Setup
 
-### Setup
+> **Important:** All commands below should be run from the **root of the project folder** (where this README.md file is located).
+
+For running tests locally without Docker, follow these steps:
+
+### 1. Install VS Code Extension (First Step)
+Search for **"RobotCode - Robot Framework Support"** by **Daniel Biehl** [robotcode.io](http://robotcode.io/) and install it. This extension enables running tests directly from VS Code.
+
+### 2. Create Virtual Environment
+VS Code will automatically prompt to create a virtual environment when opening the project. Select `requirements.txt` when prompted to install dependencies.
+
+Or manually create (run from the root of the project folder):
 ```bash
-# Create virtual environment
-python -m venv venv
-source venv/bin/activate  # On Windows: venv\Scripts\activate
-
-# Install dependencies
-pip install -r requirements.txt
-
-# Initialize browsers
-rfbrowser init
-
-# Initialize database
-python init_db.py
+python -m venv .venv
 ```
 
-### Run Tests
+### 3. Select Python Interpreter
+- Press `Ctrl+Shift+P`
+- Type "Python: Select Interpreter"
+- Choose the interpreter from your project's `.venv` folder
+
+### 4. Initialize Browser Library (for UI tests)
+Activate virtual environment and initialize Playwright browsers (run from the root of the project folder):
+```bash
+# Windows
+.\.venv\Scripts\Activate.ps1
+rfbrowser init
+
+# Linux/macOS
+source .venv/bin/activate
+rfbrowser init
+```
+
+### 5. Run Tests
+You can run tests directly from VS Code by right-clicking in `.robot` files and selecting "Run Test", or from terminal (run from the root of the project folder):
 ```bash
 # Run all tests
 robot --outputdir reports tests/
@@ -171,9 +188,6 @@ robot --outputdir reports tests/db/
 # Run with specific tags
 robot --include smoke --outputdir reports tests/
 robot --include login --outputdir reports tests/ui/
-
-# Run in parallel (requires pabot)
-pabot --outputdir reports tests/
 ```
 
 ## Test Users (SauceDemo)
@@ -187,7 +201,7 @@ pabot --outputdir reports tests/
 
 ## Technology Stack
 
-- **Robot Framework** 7.4.1+ - Test automation framework
+- **Robot Framework** 7+ - Test automation framework (uses VAR syntax)
 - **Robot Framework Browser** 18.0.0+ - Modern Playwright-based UI automation
 - **robotframework-requests** 0.9.6+ - API testing
 - **robotframework-databaselibrary** 1.2.5+ - Database operations
@@ -253,17 +267,3 @@ services:
 - Fast iteration during development
 - No rebuild needed when changing tests
 - CI pipelines can use pre-built images via `image: adbros-demo:latest`
-
-## Project Notes
-
-- **Language**: All tests are written in English
-- **Architecture**: Three-layer separation (UI, API, DB) with strict object modeling
-- **UI Automation**: Uses robotframework-browser (Playwright), not SeleniumLibrary
-- **Selectors**: Prefers `data-test` attributes when available (SauceDemo.com)
-- **Database**: Initialized via `init_db.py` during Docker build from Fake Store API
-- **Reports**: Generated in `reports/` directory with screenshots on failure
-- **Hot-Reload**: Use `docker-compose.override.yml` for development without rebuilds
-
-## License
-
-This is a demo project for showcasing test automation skills.
