@@ -141,3 +141,15 @@ Take Screenshot On Failure
     EXCEPT    AS    ${err}
         Log    Failed to take screenshot | Filename: ${filename} | Error: ${err}    level=WARN
     END
+
+Normalize Text For Selector
+    [Documentation]    Normalize text to match data-test attribute format (lowercase, spaces to hyphens) with error handling
+    [Arguments]    ${text}
+    TRY
+        ${normalized}=    Convert To Lower Case    ${text}
+        ${normalized}=    Replace String    ${normalized}    ${SPACE}    -
+        Log    Normalized text: ${normalized}    console=True
+        RETURN    ${normalized}
+    EXCEPT    AS    ${err}
+        Fail    Failed to normalize text | Text: ${text} | Error: ${err}
+    END

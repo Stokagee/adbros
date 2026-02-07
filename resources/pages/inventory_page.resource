@@ -5,6 +5,7 @@ Library           BuiltIn
 Library           String
 Library           Collections
 Resource          base_page.resource
+Resource          ../locators.resource
 
 *** Variables ***
 ${PRODUCT_LIST}    .inventory_list
@@ -13,10 +14,7 @@ ${PRODUCT_NAME}    data-test=inventory-item-name
 ${PRODUCT_PRICE}    data-test=inventory-item-price
 ${ADD_TO_CART_BTN}    data-test=add-to-cart-
 ${REMOVE_BTN}    data-test=remove-
-${CART_LINK}    data-test=shopping-cart-link
-${CART_BADGE}    data-test=shopping-cart-badge
 ${SORT_DROPDOWN}    data-test=product-sort-container
-${MENU_BUTTON}    data-test=react-burger-menu-btn
 
 *** Keywords ***
 Verify Inventory Page Loaded
@@ -54,8 +52,8 @@ Add Product To Cart By Name
     [Documentation]    Add product to cart by its name with error handling
     [Arguments]    ${product_name}
     TRY
-        ${normalized}=    Normalize Product Name    ${product_name}
-        ${add_button}=    Set Variable    ${ADD_TO_CART_BTN}${normalized}
+        ${normalized}=    Normalize Text For Selector    ${product_name}
+        VAR    ${add_button}    ${ADD_TO_CART_BTN}${normalized}
         Click Element    ${add_button}    context= (add ${product_name})
         Log    Added product to cart: ${product_name}    console=True
     EXCEPT    AS    ${err}
@@ -70,7 +68,7 @@ Add Product To Cart By Index
         ${count}=    Get Length    ${add_buttons}
         Should Be True    ${count} > 0    msg=No add-to-cart buttons found
         Should Be True    ${index} < ${count}    msg=Index ${index} out of range (count: ${count})
-        ${button}=    Set Variable    ${add_buttons}[${index}]
+        VAR    ${button}    ${add_buttons}[${index}]
         Click    ${button}
         Log    Added product at index ${index} to cart    console=True
     EXCEPT    AS    ${err}
@@ -81,8 +79,8 @@ Remove Product From Cart By Name
     [Documentation]    Remove product from cart by its name with error handling
     [Arguments]    ${product_name}
     TRY
-        ${normalized}=    Normalize Product Name    ${product_name}
-        ${remove_button}=    Set Variable    ${REMOVE_BTN}${normalized}
+        ${normalized}=    Normalize Text For Selector    ${product_name}
+        VAR    ${remove_button}    ${REMOVE_BTN}${normalized}
         Click Element    ${remove_button}    context= (remove ${product_name})
         Log    Removed product from cart: ${product_name}    console=True
     EXCEPT    AS    ${err}
@@ -93,7 +91,7 @@ Get Product Price By Name
     [Documentation]    Get the price of a specific product with error handling
     [Arguments]    ${product_name}
     TRY
-        ${price_locator}=    Set Variable    //*[contains(@data-test, "inventory-item-name") and text()="${product_name}"]/../..//*[@data-test="inventory-item-price"]
+        VAR    ${price_locator}    //*[contains(@data-test, "inventory-item-name") and text()="${product_name}"]/../..//*[@data-test="inventory-item-price"]
         ${price_text}=    Get Element Text Content    ${price_locator}
         Log    Got price for ${product_name}: ${price_text}    console=True
         RETURN    ${price_text}
@@ -150,20 +148,9 @@ Verify Product Displayed
     [Documentation]    Verify a specific product is displayed with error handling
     [Arguments]    ${product_name}
     TRY
-        ${product_locator}=    Set Variable    //*[contains(@data-test, "inventory-item-name") and text()="${product_name}"]
+        VAR    ${product_locator}    //*[contains(@data-test, "inventory-item-name") and text()="${product_name}"]
         Element Should Be Visible    ${product_locator}
         Log    Product displayed: ${product_name}    console=True
     EXCEPT    AS    ${err}
         Fail    Failed to verify product displayed | Product: ${product_name} | Error: ${err}
-    END
-
-Normalize Product Name
-    [Documentation]    Normalize product name to match data-test attribute format with error handling
-    [Arguments]    ${name}
-    TRY
-        ${normalized}=    Convert To Lower Case    ${name}
-        ${normalized}=    Replace String    ${normalized}    ${SPACE}    -
-        RETURN    ${normalized}
-    EXCEPT    AS    ${err}
-        Fail    Failed to normalize product name | Name: ${name} | Error: ${err}
     END

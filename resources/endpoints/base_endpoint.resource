@@ -56,7 +56,7 @@ Verify Response Contains
     [Documentation]    Verify response body contains key/value with error handling
     [Arguments]    ${response}    ${key}    ${value}=${None}
     TRY
-        ${body}=    Set Variable    ${response.json()}
+        VAR    ${body}    ${response.json()}
         IF    "${value}" == "${None}"
             Should Contain    ${body}    ${key}
             Log    Response contains key: ${key}    console=True
@@ -66,4 +66,31 @@ Verify Response Contains
         END
     EXCEPT    AS    ${err}
         Fail    Response verification failed | Key: ${key} | Value: ${value} | Error: ${err}
+    END
+
+_Get All Items From Endpoint
+    [Documentation]    Internal: Get all items from an endpoint with error handling
+    [Arguments]    ${endpoint}    ${resource_name}
+    TRY
+        ${response}=    Send GET Request    ${endpoint}
+        VAR    ${items}    ${response.json()}
+        Should Not Be Empty    ${items}
+        ${count}=    Get Length    ${items}
+        Log    Got ${count} ${resource_name}    console=True
+        RETURN    ${items}
+    EXCEPT    AS    ${err}
+        Fail    Failed to get all ${resource_name} | Error: ${err}
+    END
+
+_Get Item By Id From Endpoint
+    [Documentation]    Internal: Get item by ID from an endpoint with error handling
+    [Arguments]    ${endpoint}    ${resource_name}    ${id}
+    TRY
+        ${response}=    Send GET Request    ${endpoint}/${id}
+        VAR    ${item}    ${response.json()}
+        Should Not Be Empty    ${item}
+        Log    Got ${resource_name} with ID ${id}    console=True
+        RETURN    ${item}
+    EXCEPT    AS    ${err}
+        Fail    Failed to get ${resource_name} by ID | ID: ${id} | Error: ${err}
     END

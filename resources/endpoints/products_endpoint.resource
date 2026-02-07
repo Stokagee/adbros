@@ -10,37 +10,22 @@ ${PRODUCTS_ENDPOINT}    /products
 
 *** Keywords ***
 Get All Products
-    [Documentation]    Get all products from API with error handling
-    TRY
-        ${response}=    Send GET Request    ${PRODUCTS_ENDPOINT}
-        ${products}=    Set Variable    ${response.json()}
-        Should Not Be Empty    ${products}
-        ${count}=    Get Length    ${products}
-        Log    Got ${count} products    console=True
-        RETURN    ${products}
-    EXCEPT    AS    ${err}
-        Fail    Failed to get all products | Endpoint: ${PRODUCTS_ENDPOINT} | Error: ${err}
-    END
+    [Documentation]    Get all products from Fake Store API
+    ${items}=    _Get All Items From Endpoint    ${PRODUCTS_ENDPOINT}    products
+    RETURN    ${items}
 
 Get Product By ID
-    [Documentation]    Get specific product by ID with error handling
-    [Arguments]    ${product_id}
-    TRY
-        ${response}=    Send GET Request    ${PRODUCTS_ENDPOINT}/${product_id}
-        ${product}=    Set Variable    ${response.json()}
-        Should Be Equal As Numbers    ${product}[id]    ${product_id}
-        Log    Got product: ${product}[id] - ${product}[title]    console=True
-        RETURN    ${product}
-    EXCEPT    AS    ${err}
-        Fail    Failed to get product by ID | Product ID: ${product_id} | Error: ${err}
-    END
+    [Documentation]    Get product by ID from Fake Store API
+    [Arguments]    ${id}
+    ${item}=    _Get Item By Id From Endpoint    ${PRODUCTS_ENDPOINT}    product    ${id}
+    RETURN    ${item}
 
 Get Products By Category
     [Documentation]    Get products filtered by category with error handling
     [Arguments]    ${category}
     TRY
         ${response}=    Send GET Request    ${PRODUCTS_ENDPOINT}/category/${category}
-        ${products}=    Set Variable    ${response.json()}
+        VAR    ${products}    ${response.json()}
         Should Not Be Empty    ${products}
         FOR    ${product}    IN    @{products}
             Should Be Equal    ${product}[category]    ${category}

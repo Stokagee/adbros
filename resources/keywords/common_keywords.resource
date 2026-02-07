@@ -2,6 +2,7 @@
 Documentation     Common keywords shared across all test suites
 Library           Browser
 Resource          ../config/config.resource
+Resource          ../pages/login_page.resource
 
 *** Keywords ***
 Setup Browser Context
@@ -26,9 +27,9 @@ Login To Application
 
 Generate Random User Data
     [Documentation]    Generate random user data for checkout
-    ${first_name}=    Set Variable    Test
-    ${last_name}=    Set Variable    User${RANDOM}
-    ${postal_code}=    Set Variable    ${RANDOM}
+    VAR    ${first_name}    Test
+    VAR    ${last_name}    User${RANDOM}
+    VAR    ${postal_code}    ${RANDOM}
     RETURN    ${first_name}    ${last_name}    ${postal_code}
 
 Clean Cart If Needed
@@ -53,3 +54,8 @@ Clean Cart If Needed
     EXCEPT    AS    ${err}
         Log    No cart badge found or cart already empty: ${err}    console=True
     END
+
+Open Login Page And Login
+    [Documentation]    Open login page and login as standard user
+    Open Login Page
+    Login As Standard User

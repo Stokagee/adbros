@@ -1,4 +1,4 @@
-robotframework>=6.1.0
+robotframework>=7.4.1
 robotframework-browser>=18.0.0
 robotframework-requests>=0.9.6
 robotframework-databaselibrary>=1.2.5

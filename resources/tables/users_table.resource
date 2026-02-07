@@ -9,12 +9,12 @@ Resource          base_table.resource
 Get User By ID
     [Documentation]    Get user by ID from database with error handling and dictionary return
     [Arguments]    ${user_id}
-    ${sql}=    Set Variable    SELECT email, username, name FROM users WHERE id = ${user_id}
+    VAR    ${sql}    SELECT email, username, name FROM users WHERE id = ${user_id}
     TRY
         Log    Getting user by ID: ${user_id}    console=True
         @{row}=    Query    ${sql}
         Should Not Be Empty    ${row}    msg=User ID ${user_id} not found
-        # Destructuring unpack for safe column access
+        # Destructuring unpack for safe column access (Set Variable kept for destructuring)
         ${email}    ${username}    ${name}=    Set Variable    @{row}[0]
         &{user}=    Create Dictionary    id=${user_id}    email=${email}    username=${username}    name=${name}
         Log    Found user: ${username} (${email})    console=True
@@ -24,14 +24,9 @@ Get User By ID
     END
 
 Get User Count
-    [Documentation]    Get total number of users with error handling
-    TRY
-        ${count}=    Row Count    SELECT COUNT(*) FROM users
-        Log    User count: ${count}    console=True
-        RETURN    ${count}
-    EXCEPT    AS    ${err}
-        Fail    Failed to get user count | Error: ${err}
-    END
+    [Documentation]    Get total number of users in database
+    ${count}=    _Get Table Item Count    users
+    RETURN    ${count}
 
 Verify User Exists
     [Documentation]    Verify user with given ID exists with error handling

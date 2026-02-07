@@ -51,7 +51,8 @@ COPY . .
 # Create necessary directories
 RUN mkdir -p reports resources
 
-# Initialize database (if init_db.py exists)
+# Initialize database (init_db.py fetches latest data from Fake Store API)
+# Note: Tests also have Initialize Test Database keyword for runtime setup
 RUN if [ -f init_db.py ]; then python init_db.py; fi
 
 # Default command to run tests

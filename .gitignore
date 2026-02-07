@@ -60,3 +60,4 @@ CLAUDE.md
 nul
 .claude/settings.local.json
 .playwright-mcp/
+playwright-log.txt

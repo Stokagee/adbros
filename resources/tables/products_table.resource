@@ -9,12 +9,12 @@ Resource          base_table.resource
 Get Product By ID
     [Documentation]    Get product by ID from database with error handling and dictionary return
     [Arguments]    ${product_id}
-    ${sql}=    Set Variable    SELECT title, price, category FROM products WHERE id = ${product_id}
+    VAR    ${sql}    SELECT title, price, category FROM products WHERE id = ${product_id}
     TRY
         Log    Getting product by ID: ${product_id}    console=True
         @{row}=    Query    ${sql}
         Should Not Be Empty    ${row}    msg=Product ID ${product_id} not found
-        # Destructuring unpack for safe column access
+        # Destructuring unpack for safe column access (Set Variable kept for destructuring)
         ${title}    ${price}    ${category}=    Set Variable    @{row}[0]
         ${price_num}=    Convert To Number    ${price}
         &{product}=    Create Dictionary    id=${product_id}    title=${title}    price=${price_num}    category=${category}
@@ -25,14 +25,9 @@ Get Product By ID
     END
 
 Get Product Count
-    [Documentation]    Get total number of products with error handling
-    TRY
-        ${count}=    Row Count    SELECT COUNT(*) FROM products
-        Log    Product count: ${count}    console=True
-        RETURN    ${count}
-    EXCEPT    AS    ${err}
-        Fail    Failed to get product count | Error: ${err}
-    END
+    [Documentation]    Get total number of products in database
+    ${count}=    _Get Table Item Count    products
+    RETURN    ${count}
 
 Verify Product Exists
     [Documentation]    Verify product with given ID exists with error handling

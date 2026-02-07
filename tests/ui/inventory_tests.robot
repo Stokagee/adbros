@@ -14,13 +14,8 @@ Suite Teardown    Teardown Browser Context
 Test Setup        Open Login Page And Login
 Test Teardown     Run Keywords    Clean Cart If Needed    AND    Close Page
 
-*** Keywords ***
-Open Login Page And Login
-    [Documentation]    Open login page and login as standard user
-    Open Login Page
-    Login As Standard User
-
 Test Tags         inventory    ui    demo
+
 
 *** Test Cases ***
 
@@ -107,8 +102,8 @@ All Products Have Names And Prices
     [Tags]    visual
     ${count}=    Get Product Count
     FOR    ${i}    IN RANGE    ${count}
-        ${name_locator}=    Set Variable    (//*[@data-test="inventory-item-name"])[${i+1}]
-        ${price_locator}=    Set Variable    (//*[@data-test="inventory-item-price"])[${i+1}]
+        VAR    ${name_locator}    (//*[@data-test="inventory-item-name"])[${i+1}]
+        VAR    ${price_locator}    (//*[@data-test="inventory-item-price"])[${i+1}]
         ${name_states}=    Get Element States    ${name_locator}
         Should Contain    ${name_states}    visible    msg=Product name at index ${i} is not visible
         ${price_states}=    Get Element States    ${price_locator}

@@ -12,7 +12,7 @@ Initialize Test Database
         Log    Initializing test database    console=True
 
         # Create database directory
-        ${db_dir}=    Set Variable    ${EXECDIR}${/}resources
+        VAR    ${db_dir}    ${EXECDIR}${/}resources
         ${exists}=    Run Keyword And Return Status    Directory Should Exist    ${db_dir}
         IF    not ${exists}
             Create Directory    ${db_dir}

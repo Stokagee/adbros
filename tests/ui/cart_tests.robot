@@ -25,11 +25,6 @@ Setup Cart Test
     Add Product To Cart By Index    0
     Click Cart Link
 
-Open Login Page And Login
-    [Documentation]    Open login page and login without adding items
-    Open Login Page
-    Login As Standard User
-
 *** Test Cases ***
 
 Cart Shows Added Items

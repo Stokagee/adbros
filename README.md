@@ -46,20 +46,24 @@ adbros/
 ├── docker-compose.yml          # Service configuration
 ├── requirements.txt            # Python dependencies
 ├── run_tests.sh/.bat           # Startup scripts
-├── init_db.py                  # Database initialization
-├── pages/                      # Page Object Model
-│   ├── base_page.robot        # Common page methods
-│   ├── login_page.robot       # Login page objects
-│   ├── inventory_page.robot   # Products page objects
-│   ├── cart_page.robot        # Cart page objects
-│   ├── checkout_page.robot    # Checkout page objects
-│   └── navigation_page.robot  # Navigation elements
-├── tests/                      # Test suites
-│   ├── common/                # Shared keywords
-│   ├── ui/                    # UI tests (SauceDemo)
-│   ├── api/                   # API tests (Fake Store)
-│   └── db/                    # Database tests
-└── resources/                  # Test data and config
+├── init_db.py                  # Database initialization (Docker build only)
+├── resources/                  # Shared resources
+│   ├── config/                # Configuration and test data
+│   ├── pages/                 # Page Object Model
+│   │   ├── base_page.resource        # Common page methods
+│   │   ├── login_page.resource       # Login page objects
+│   │   ├── inventory_page.resource   # Products page objects
+│   │   ├── cart_page.resource        # Cart page objects
+│   │   ├── checkout_page.resource    # Checkout page objects
+│   │   └── navigation_page.resource  # Navigation elements
+│   ├── keywords/              # Reusable keywords
+│   ├── endpoints/             # API endpoint objects
+│   ├── tables/                # Database table objects
+│   └── locators.resource      # Shared locators
+└── tests/                      # Test suites
+    ├── ui/                    # UI tests (SauceDemo)
+    ├── api/                   # API tests (Fake Store)
+    └── db/                    # Database tests
 ```
 
 ## Test Suites
@@ -168,7 +172,8 @@ The project includes complete Docker setup:
 - All tests are written in English
 - Page Object Model pattern is strictly followed
 - robotframework-browser (Playwright) is used for UI automation
-- SQLite database is automatically initialized from Fake Store API
+- Database is initialized at runtime using Robot Framework keywords
+- `init_db.py` is used only during Docker build to fetch latest data from API
 - Reports are generated in the `reports/` directory
 
 ## License

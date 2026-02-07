@@ -37,7 +37,7 @@ Failed Login With Invalid Password
 Login With Empty Username Shows Error
     [Documentation]    Verify error when username is empty
     [Tags]    negative    validation
-    ${valid_password}=    Set Variable    secret_sauce
+    VAR    ${valid_password}    secret_sauce
     Fill Secret Input    data-test=password    ${valid_password}
     Click Element    data-test=login-button
     Verify Login Error Displayed    Epic sadface: Username is required

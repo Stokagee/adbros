@@ -5,11 +5,9 @@ Library           BuiltIn
 Library           String
 Library           Collections
 Resource          base_page.resource
+Resource          ../locators.resource
 
 *** Variables ***
-${CART_LINK}    data-test=shopping-cart-link
-${CART_BADGE}    data-test=shopping-cart-badge
-${MENU_BUTTON}    data-test=react-burger-menu-btn
 ${LOGOUT_LINK}    data-test=logout-sidebar-link
 ${INVENTORY_URL}    https://www.saucedemo.com/inventory.html
 ${CART_URL}    https://www.saucedemo.com/cart.html
@@ -49,7 +47,7 @@ Logout
     [Documentation]    Logout from the application with error handling
     TRY
         Click Menu Button
-        ${logout_link}=    Set Variable    data-test=logout-sidebar-link
+        VAR    ${logout_link}    data-test=logout-sidebar-link
         Wait For Element Visible    ${logout_link}
         Click Element    ${logout_link}    context= (logout link)
         Log    Logged out    console=True
