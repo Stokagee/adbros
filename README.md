@@ -1,4 +1,4 @@
-# Robot Framework Demo Project for AdBros
+# Robot Framework Demo Project for Adbros
 
 A comprehensive test automation demo showcasing Robot Framework capabilities with UI, API, and Database testing layers.
 
