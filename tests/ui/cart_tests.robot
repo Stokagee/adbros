@@ -1,7 +1,5 @@
 *** Settings ***
 Documentation     Shopping cart test suite for SauceDemo
-Library           Browser
-Library           BuiltIn
 Resource          ../../resources/ui/common.resource
 
 Suite Setup       Setup Browser Context
@@ -11,13 +9,6 @@ Test Teardown     Run Keywords    Clean Cart If Needed    AND    Close Page
 
 Test Tags         cart    ui    demo
 
-*** Keywords ***
-Setup Cart Test
-    [Documentation]    Setup for cart tests - login and add item to cart
-    Open Login Page
-    Login As Standard User
-    Add Product To Cart By Index    0
-    Click Cart Link
 
 *** Test Cases ***
 
@@ -80,4 +71,12 @@ Setup Multiple Items
     Login As Standard User
     Add Product To Cart By Index    0
     Add Product To Cart By Index    1
+    Click Cart Link
+
+*** Keywords ***
+Setup Cart Test
+    [Documentation]    Setup for cart tests - login and add item to cart
+    Open Login Page
+    Login As Standard User
+    Add Product To Cart By Index    0
     Click Cart Link

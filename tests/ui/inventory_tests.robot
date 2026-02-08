@@ -1,7 +1,5 @@
 *** Settings ***
 Documentation     Inventory page test suite for SauceDemo
-Library           Browser
-Library           BuiltIn
 Resource          ../../resources/ui/common.resource
 
 Suite Setup       Setup Browser Context

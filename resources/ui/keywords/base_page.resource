@@ -4,7 +4,7 @@ Resource          ${EXECDIR}/resources/config/config.resource
 
 *** Variables ***
 ${SELECTOR_TIMEOUT}    ${ELEMENT_TIMEOUT}
-${PAGE_LOAD_TIMEOUT}    30s
+${PAGE_LOAD_TIMEOUT}    60s
 
 *** Keywords ***
 Wait For Element Visible

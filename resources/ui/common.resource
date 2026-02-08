@@ -31,13 +31,6 @@ Login To Application
     Open Login Page
     Login As User    ${username}    ${password}
 
-Generate Random User Data
-    [Documentation]    Generate random user data for checkout
-    VAR    ${first_name}    Test
-    VAR    ${last_name}    User${RANDOM}
-    VAR    ${postal_code}    ${RANDOM}
-    RETURN    ${first_name}    ${last_name}    ${postal_code}
-
 Clean Cart If Needed
     [Documentation]    Remove all items from cart if any exist
     TRY

@@ -1,6 +1,5 @@
 *** Settings ***
 Documentation     Login page test suite for SauceDemo
-Library           Browser
 Resource          ../../resources/ui/common.resource
 
 Suite Setup       Setup Browser Context

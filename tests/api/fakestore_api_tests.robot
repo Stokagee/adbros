@@ -1,7 +1,5 @@
 *** Settings ***
 Documentation     API test suite for Fake Store API
-Library           RequestsLibrary
-Library           Collections
 Resource          ../../resources/api/common.resource
 
 Suite Setup       Create API Session

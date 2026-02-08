@@ -1,8 +1,5 @@
 *** Settings ***
 Documentation     Database test suite for Fake Store API data
-Library           DatabaseLibrary
-Library           Collections
-Library           OperatingSystem
 Resource          ../../resources/db/common.resource
 
 Suite Setup       Initialize Test Database

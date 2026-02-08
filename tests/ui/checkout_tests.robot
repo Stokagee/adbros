@@ -1,7 +1,5 @@
 *** Settings ***
 Documentation     Checkout flow test suite for SauceDemo
-Library           Browser
-Library           BuiltIn
 Resource          ../../resources/ui/common.resource
 
 Suite Setup       Setup Browser Context
@@ -10,14 +8,6 @@ Test Setup        Setup Checkout Test
 Test Teardown     Run Keywords    Clean Cart If Needed    AND    Close Page
 
 Test Tags         checkout    ui    demo
-
-*** Keywords ***
-Setup Checkout Test
-    [Documentation]    Setup for checkout tests - login, add item, go to cart
-    Open Login Page
-    Login As Standard User
-    Add Product To Cart By Index    0
-    Click Cart Link
 
 *** Test Cases ***
 
@@ -114,3 +104,11 @@ Cancel From Checkout Step Two Returns To Inventory
     Click Element    data-test=cancel
     ${url}=    Get Current URL
     Should Contain    ${url}    inventory.html
+
+*** Keywords ***
+Setup Checkout Test
+    [Documentation]    Setup for checkout tests - login, add item, go to cart
+    Open Login Page
+    Login As Standard User
+    Add Product To Cart By Index    0
+    Click Cart Link
