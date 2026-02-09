@@ -178,7 +178,7 @@ rfbrowser init
 ```
 
 ### 5. Run Tests
-You can run tests directly from VS Code by right-clicking in `.robot` files and selecting "Run Test", or from terminal (run from the root of the project folder):
+You can run tests directly from VS Code by right-clicking in `.robot` files and selecting "Run Test", or from terminal (run from the root of the tests folder):
 ```bash
 # Run all tests
 robot --outputdir reports tests/
