@@ -18,6 +18,9 @@ This project demonstrates professional test automation practices using:
 
 ### One-Command Execution
 
+**First run notice:** Initial execution can take **1–25 minutes** depending on your hardware, because the Docker image needs to be built.
+- Subsequent test runs are much faster since the image is already built.
+
 **Linux/macOS:**
 ```bash
 # Run tests (fast, uses existing image in the root of the project folder)
